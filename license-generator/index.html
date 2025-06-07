@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOG Tech License Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>AOG Tech License Generator</h1>
+            </div>
+            <p class="subtitle">Professional License Key Management System</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- License Generation Form -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-key"></i>
+                    <h2>Generate License Key</h2>
+                </div>
+                <div class="card-body">
+                    <form id="licenseForm" class="license-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerEmail">
+                                    <i class="fas fa-envelope"></i>
+                                    Customer Email *
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="customerEmail" 
+                                    name="customerEmail" 
+                                    required 
+                                    placeholder="customer@example.com"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="customerName">
+                                    <i class="fas fa-user"></i>
+                                    Customer Name *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="customerName" 
+                                    name="customerName" 
+                                    required 
+                                    placeholder="John Doe"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="validityDays">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Validity (Days)
+                                </label>
+                                <select id="validityDays" name="validityDays">
+                                    <option value="30">30 days (Trial)</option>
+                                    <option value="90">90 days (Extended Trial)</option>
+                                    <option value="365" selected>1 year (Standard)</option>
+                                    <option value="730">2 years (Premium)</option>
+                                    <option value="1095">3 years (Enterprise)</option>
+                                    <option value="custom">Custom...</option>
+                                </select>
+                                <input 
+                                    type="number" 
+                                    id="customDays" 
+                                    name="customDays" 
+                                    placeholder="Enter custom days"
+                                    min="1" 
+                                    max="3650"
+                                    style="display: none;"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="features">
+                                    <i class="fas fa-cogs"></i>
+                                    Features
+                                </label>
+                                <select id="features" name="features">
+                                    <option value="basic">Basic POS</option>
+                                    <option value="basic,advanced">Basic + Advanced</option>
+                                    <option value="basic,multi-user">Basic + Multi-user</option>
+                                    <option value="all" selected>All Features</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-key"></i>
+                                Generate License Key
+                            </button>
+                            <button type="reset" class="btn-secondary">
+                                <i class="fas fa-undo"></i>
+                                Reset Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- License Result -->
+            <div id="licenseResult" class="card result-card" style="display: none;">
+                <div class="card-header success">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>License Generated Successfully</h2>
+                </div>
+                <div class="card-body">
+                    <div class="license-display">
+                        <div class="license-key-container">
+                            <label>License Key:</label>
+                            <div class="license-key-display">
+                                <span id="generatedKey"></span>
+                                <button id="copyKey" class="btn-copy" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="license-details">
+                            <div class="detail-row">
+                                <span class="label">Customer:</span>
+                                <span id="resultName"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Email:</span>
+                                <span id="resultEmail"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Valid Until:</span>
+                                <span id="resultExpiry"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Features:</span>
+                                <span id="resultFeatures"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Generated:</span>
+                                <span id="resultGenerated"></span>
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button id="downloadLicense" class="btn-download">
+                                <i class="fas fa-download"></i>
+                                Download License Info
+                            </button>
+                            <button id="emailLicense" class="btn-email">
+                                <i class="fas fa-envelope"></i>
+                                Email to Customer
+                            </button>
+                            <button id="generateAnother" class="btn-secondary">
+                                <i class="fas fa-plus"></i>
+                                Generate Another
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- License History -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Recent Licenses</h2>
+                    <button id="clearHistory" class="btn-clear">
+                        <i class="fas fa-trash"></i>
+                        Clear History
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="licenseHistory" class="license-history">
+                        <div class="no-history">
+                            <i class="fas fa-info-circle"></i>
+                            <p>No licenses generated yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 AOG Tech. All rights reserved. | POS System License Generator v1.0</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
